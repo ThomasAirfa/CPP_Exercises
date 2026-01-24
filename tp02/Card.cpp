@@ -1,5 +1,4 @@
 #include "Card.hpp"
-#include <vector>
 
 std::vector<Color> all_colors = {Color::CARREAU, Color::COEUR, Color::PIQUE, Color::TREFLE};
 std::vector<Value> all_values = {Value::AS, Value::ROI, Value::DAME, Value::VALET, Value::DIX, Value::NEUF, Value::HUIT, Value::SEPT};
