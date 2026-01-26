@@ -143,6 +143,36 @@ Chaque élément est déplacé de son ancienne adresse mémoire vers la nouvelle
 1. Recopier ce graphe et représenter avec une couleur différente les transitions dans le graphe d'ownership après le dernier `push_back` si celui-ci déclenchait une réallocation mémoire.
 2. Quel problème relève-t-on dans le graphe ?
 3. Modifiez le code ci-dessus afin que `Client::products` contienne des pointeurs.
+```cpp
+#include <memory>
+#include <vector>
+
+class Product
+{};
+
+class Client
+{
+public:
+    std::vector<Product*> products;
+};
+
+int main()
+{
+    {
+        auto client = Client {};
+        client.products.push_back(new Product{});
+        client.products.push_back(new Product{});
+
+        auto& first_product = *client.products.front();
+        // <-- Le graphe d'ownership donné se situe ici
+
+        client.products.push_back(new Product{});
+        // <-- A la question 1, on dessine le graphe ici
+    }
+    // <--  On se place ici pour la question 6
+    return 0;
+}
+```
 4. Redessinez le graphe d'ownership de la question 1 avec la transition, mais en prennant en compte vos changements dans le code.  
 5. Avez-vous toujours le problème relevé à la question 2 ?
 6. Suivant votre réponse à la question 3, ceci a potentiellement créé un autre problème qui se révèle quand on arrive au troisième commentaire.
@@ -162,6 +192,28 @@ XX add(XX a, XX b)
 }
 
 XX add_to(XX a, XX b)
+{
+    a += b;
+}
+
+int main()
+{
+    int x = 10;
+    int y = add(x, x);
+    add_to(y, 22);
+    std::cout << x << " " << y << std::endl;
+    return 0;
+}
+```
+```cpp
+#include <iostream>
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+void add_to(int& a, int b)
 {
     a += b;
 }
@@ -199,6 +251,30 @@ bool are_all_positives(std::vector<int> values, int negative_indices_out[], size
 // Concatenate 'str1' and 'str2' and return the result.
 // The input parameters are not modified by the function.
 std::string concatenate(char* str1, char* str2);
+```
+
+
+```cpp
+// Return the number of occurrences of 'a' found in string 's'.
+int count_occurrences(char a, const std::string& s);
+
+// Update function of a rendering program.
+// - dt (delta time) is read by the function to know the time elapsed since the last frame.
+// - stores in *b whether anything actually changed.
+bool update_loop(float dt);
+
+// Return whether all numbers in 'values' are positive.
+// If there are negative values in it, fill the array 'negative_indices_out' with the indices
+// of these values and set its size in 'negative_count_out'.
+// ex: auto res = are_all_positive({ 1, -2, 3, -4 }, negative_indices, negative_count);
+//    -> res is false, since not all values are positive
+//    -> negative_indices contains { 1, 3 } because values[1] = -2 and values[3] = -4
+//    -> negative_count is 2
+std::vector<int> are_all_positives(const std::vector<int>& values);
+
+// Concatenate 'str1' and 'str2' and return the result.
+// The input parameters are not modified by the function.
+std::string concatenate(const st::string& str1, const std::string& str2);
 ```
 
 ## Exercice 3 - Gestion des resources (55min)
