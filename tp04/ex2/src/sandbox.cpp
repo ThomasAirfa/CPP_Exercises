@@ -5,5 +5,9 @@
 // !! Ne pas inclure ce fichier dans un autre !!
 // !! Ne pas inclure d'autre .cpp !!
 
-int main()
-{}
+#include "PhoneNumber.hpp"
+
+int main() {
+    auto phone_number = PhoneNumber{1, 64, 12, 66, 73};
+    phone_number.print();
+}
