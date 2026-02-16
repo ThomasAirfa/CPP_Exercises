@@ -9,12 +9,14 @@
 class Tracker
 {
 public:
+    // constructeur sans paramètre
     Tracker()
         : _id { ++_next_id }
     {
         ++_count;
     }
 
+    // constructeur de copie
     Tracker(const Tracker& o)
         : _id { o._id }
     {
@@ -22,6 +24,7 @@ public:
         ++_copies;
     }
 
+    // Opérateur d'affectation par déplacement
     Tracker& operator=(const Tracker& other)
     {
         _id = other._id;
@@ -29,14 +32,17 @@ public:
         return *this;
     }
 
-    Tracker(Tracker&& o) noexcept
+    // Constructeur de déplacement
+    Tracker(Tracker&& o) noexcept // pas d'exception, permet au compilateur de faire des optimisations
         : _id { o._id }
     {
         _count++;
     }
 
+    // Opérateur d'affectation par copie
     Tracker& operator=(Tracker&& other) noexcept = default;
 
+    // destructeur
     ~Tracker() { --_count; }
 
     static int count() { return _count; }
@@ -55,3 +61,12 @@ void assert_no_copy(std::string const& test_name);
 void assert_mem_count(std::string const& test_name, int count);
 
 // Il est interdit de modifier ce fichier !!
+
+/*
+Quelle est la règle des 0/3/5 et est-ce que Tracker la suit?
+
+règle des 0/3/5 :
+- 0 : On redéfinit rien
+- 3 : On redéfinit Destructeur, Constructeur par copie, Opérateur de déplacement par copie
+- 5 : On redéfinit tout Destructeur, Constructeur par copie, Opérateur de déplacement par copie, Constructeur par déplacement et Opérateur de déplacement par copie.
+*/

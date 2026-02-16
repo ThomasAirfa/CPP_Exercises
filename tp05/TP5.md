@@ -21,6 +21,12 @@ i
 i = 4
 i == 4
 ```
+Réponse : 
+- R-value
+- R-value
+- L-value
+- L-value
+- R-value
 
 b. `vec` est un `std::vector<char>`
 ```cpp
@@ -31,6 +37,13 @@ std::vector { 'a', 'b', 'c' }
 vec.emplace_back('d')
 std::move(vec)
 ```
+Réponse : 
+- L-value
+- L-value
+- ni l'un ni l'autre (renvoie void)
+- R-value
+- L-value
+- R-value
 
 c. `ptr` est un pointeur de `int`
 ```cpp
@@ -40,6 +53,13 @@ ptr + 3
 new int(*ptr)
 *(new int(*ptr))
 ```
+Réponse :
+- R-value
+- L-value
+- R-value
+- R-value
+- L-value
+
 
 d. `str` est une `std::string`
 ```cpp
@@ -48,6 +68,13 @@ str
 str + "aaaa"
 str += "aaaa"
 ```
+
+Réponse : 
+- R-value
+- L-value
+- R-value
+- L-value
+
 
 2. Supposons que vous ayiez l'instruction : `auto inst = Class { expr };`.  
 Quelles sont les deux conditions pour que le constructeur de copie soit appelé ?  
