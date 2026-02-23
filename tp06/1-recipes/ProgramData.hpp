@@ -4,6 +4,8 @@
 #include "Recipe.hpp"
 #include "aliases.hpp"
 #include <string>
+#include <memory>
+#include <map>
 
 enum class Outcome
 {
@@ -64,4 +66,9 @@ public:
 
   //
   // Vous aurez besoin d'ajouter des champs et des fonctions auxiliaires ci-dessous !!
+  
+  private :
+    std::vector<std::unique_ptr<Material>> _registered_materials;
+    MaterialBag _inventory;
+    // std::map<const Material, const int> _material_from_name; // map string, index pour améliorer perf
 };

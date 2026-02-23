@@ -1,30 +1,48 @@
 #include "ProgramData.hpp"
 #include <iostream>
+#include <memory>
+#include <utility>
 
 
 void ProgramData::register_material(std::string name)
 {
-  std::cout << "Feature is not yet implemented (register_material)" << std::endl;
+  _registered_materials.push_back(std::make_unique<Material>(std::move(name)));
+  // _registered_materials.emplace_back(std::make_unique<Material>(std::move(name)));
+  // _registered_materials.emplace_back(Material(std::move(name)));
 }
 
 void ProgramData::get_registered_materials(std::vector<const Material*>& materials) const
 {
-  std::cout << "Feature is not yet implemented (get_registered_materials)" << std::endl;
+  for (auto& material : _registered_materials) {
+    materials.push_back(material.get());
+  }
 }
 
 void ProgramData::add_material_to_inventory(const Material& mat, int quantity)
 {
-  std::cout << "Feature is not yet implemented (add_material_to_inventory)" << std::endl;
+  for (auto& slot : _inventory) {
+    if (*slot.first == mat) {
+      slot.second += quantity;
+      return;
+    }
+  }
+  _inventory.emplace_back(&mat, (size_t) quantity);
 }
 
 void ProgramData::get_inventory(MaterialBag& materials) const
 {
-  std::cout << "Feature is not yet implemented (get_inventory)" << std::endl;
+  for (auto& slot : _inventory) {
+    materials.emplace_back(slot);
+  }
 }
 
 const Material* ProgramData::get_material_by_name(const std::string& name) const
 {
-  std::cout << "Feature is not yet implemented (get_material_by_name)" << std::endl;
+  for (auto& material : _registered_materials) {
+    if (*material == name) {
+      return material.get();
+    }
+  }
   return nullptr;
 }
 

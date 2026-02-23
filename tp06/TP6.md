@@ -37,6 +37,10 @@ cmake --build <chemin_vers_le_dossier_build> --target ex1
     b. Ouvrez maintenant le fichier [`ProgramData.cpp`](./1-recipes/ProgramData.cpp).
     Pourquoi le programme ne fait rien ?
 
+    ```
+    rien n'est implémenté toutes les fonctions renvoient not implemented yet dans le code.
+    ```
+
     c. Le fichier [`aliases.hpp`](./1-recipes/aliases.hpp) contient des définitions de types qui servent d'interface entre le frontend (qui vous est donné) et le backend (que vous devez écrire.)  Vous aurez sans doute à les modifier.
 
     d. Les fichiers [`Material.hpp`](./1-recipes/Material.hpp) et [`Recipe.hpp`](./1-recipes/Recipe.hpp) contiennent des coquilles vident de classes que vous aurez à remplir.
