@@ -29,7 +29,7 @@ public:
   const Material* get_material_by_name(const std::string& name) const;
 
   // Ajoute un nouveau materiau à l'inventaire
-  void add_material_to_inventory(const Material*, int = 1);
+  void add_material_to_inventory(const Material&, int = 1);
 
   // Récupère la liste des matériaux présents dans l'inventaire avec la quantité
   // correspondante
@@ -38,7 +38,7 @@ public:
   //===== Partie Recette ======================================================
 
   // Enregistre un nouveau modèle de recette au répertoire
-  void register_recipe(std::vector<const Material*>, const Material*);
+  void register_recipe(std::vector<const Material*>, const Material&);
 
   // Collecte la liste de toutes les recettes
   void get_all_recipes(std::vector<const Recipe*>&) const;
@@ -62,7 +62,6 @@ public:
   // Sinon, renvoie FAILURE et indique les materiaux manquants dans le second argument
   Outcome produce(const Recipe& recipe, MaterialBag& materials);
 
-
   //
-  // Vous aurez besoin d'ajouter des champs et des fonctions auxiliaires !!
+  // Vous aurez besoin d'ajouter des champs et des fonctions auxiliaires ci-dessous !!
 };
