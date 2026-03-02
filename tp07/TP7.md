@@ -102,9 +102,11 @@ Une fois de plus, nous vous avons préparé le squelette du programme.
     ```
 
 2. Prenez connaissance du contenu des fichiers pré-existants et répondez aux questions suivantes :
-- Dans [Dungeon.cpp](dungeon/Dungeon.cpp), quel est le rôle de la fonction `display` ?
+- Dans [Dungeon.cpp](dungeon/Dungeon.cpp), quel est le rôle de la fonction `display` ? -> 
+Affiche la grille avec les entités en fonction de leur pos.
 - Dans [Dungeon.cpp](dungeon/Dungeon.cpp), quel est le rôle de la fonction `update` ?
-- Quelle variable du `main` porte l'ownership des entités ?
+-> Pour chaque entité update la pos .
+- Quelle variable du `main` porte l'ownership des entités ? -> all_entities vector d'unique pointeur d'entity.
 
 
 ### B. Personnage

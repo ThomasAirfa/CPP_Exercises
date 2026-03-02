@@ -21,21 +21,33 @@ void random_move(int& x, int& y)
 
     case 1:
         // Move left
+        if (x == 0) {
+        break;   
+        }
         --x;
         break;
 
     case 2:
         // Move right
+        if (x == 49) {
+            break;
+        }
         ++x;
         break;
 
     case 3:
         // Move down
+        if (y == 9) {
+            break;
+        }
         ++y;
         break;
 
     case 4:
         // Move up
+        if (y == 0) {
+            break;
+        }
         --y;
         break;
 

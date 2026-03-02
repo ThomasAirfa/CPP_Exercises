@@ -10,15 +10,15 @@ public:
     Entity(int x, int y)
         : _x { x }
         , _y { y }
-    {logger << "Hello world" << std::endl;}
+    {/*logger << "Hello world" << std::endl;*/}
 
     int get_x() const { return _x; }
     int get_y() const { return _y; }
 
-    char get_representation() const { return '?'; }
+    virtual char get_representation() const;
 
-    void update() { 
-        random_move(_x, _y); 
+    virtual void update() { 
+        random_move(_x, _y);
         logger << "Updated " << this << std::endl;
     }
 
