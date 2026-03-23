@@ -12,16 +12,20 @@
 
 | Conteneur     | Insertion (en tête / en fin) | Suppression (en tête / en fin) |     Accès    |
 |---------------|----------------------------- |--------------------------------|--------------|
-| array         |     N/A                      |     N/A                        |              |
-| deque         |                              |                                |              |
-| forward_list  |                              |                                |              |
-| set           |                              |                                |              |
-| unordered_map |                              |                                |              |
+| array         |     N/A                      |     N/A                        |   O(1)          |
+| deque         |     O(1)/O(1)                        |     O(1)/O(1)                           |         O(1)     |
+| forward_list  |     O(1) / N/A                        |             O(1) / N/A                    |           N/A   |
+| set           |              O(log(n))                |             O(log(n))                   |      O(log(n))        |
+| unordered_map |    O(1) ~~ O(size)    (amortie)                       |        O(1) ~~ O(size)    (amortie)                      |      O(1) ~~ O(size)   (amortie)      |
 
 2. Supposons que vous ayez récupéré un itérateur sur un élément d'un conteneur avec : `auto it = std::find(ctn.begin(), ctn.end(), element_to_find)`.  
 En fonction du type de conteneur, quelles sont les opérations susceptibles d'invalider cet itérateur ?  
 Exemple : Si `ctn` est un `std::vector`, alors `it` peut être invalidé en cas de suppression d'un élément précédent `it` dans le conteneur.
 Répondre pour les conteneurs array, forward_list et unordered_map.
+
+> array : jamais invalidé. \
+unordered_map : clear, rehash, reserve, operator=	Always, insert, emplace, emplace_hint, operator[]	Only if causes rehash, erase	Only to the element erased. \
+forward_list : pas d'accès.
 
 
 ## Exercice 2 - Lambdas et algorithmes (40 min)
