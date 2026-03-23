@@ -34,19 +34,72 @@ Ouvrez chacun des liens ci-dessous et complétez le code afin que les fonctions 
 Une seule contrainte, on vous imposera un algorithme de la librairie standard à utiliser.
 
 1. Algorithme: std::remove_if  
-   Code: https://godbolt.org/z/KaTnr8Pr4  
+   Code: https://godbolt.org/z/KaTnr8Pr4 
+
+```cpp
+   void remove_cats(std::vector<Animal>& animals)
+{
+    for (const Animal& animal : animals) {
+        const auto new_end = std::remove_if(animals.begin(), animals.end(), [](const Animal& animal) {return animal.species == "cat"; });
+        animals.erase(new_end, animals.end());
+    }
+}
+``` 
 
 2. Algorithme: std::find_if  
    Code: https://godbolt.org/z/55x9Efrza  
 
+```cpp
+std::ptrdiff_t get_position_of_first_with_species(const std::deque<Animal>& animals, const std::string& species)
+{
+    auto it = std::find_if(animals.begin(), animals.end(), [&species](const Animal& animal) {return animal.species == species; } );
+    if (it == animals.end()) {
+        return -1;
+    }
+    return it - animals.begin();
+}
+```
+
 3. Algorithme: std::for_each
    Code: https://godbolt.org/z/nrGaa8aEa
+
+```cpp
+void remove_hp_to_everyone(std::list<Character>& characters, int hp_to_remove)
+{
+    std::for_each(characters.begin(), characters.end(), [hp_to_remove](Character& character) { character.hp -= hp_to_remove; });
+}
+```
 
 4. Algorithme: std::transform + std::back_inserter  
    Code: https://godbolt.org/z/PrPoEYK5d  
 
+```cpp
+std::vector<std::string> compute_full_names(const std::vector<Person>& persons)
+{
+    std::vector<std::string> full_names;
+    std::transform(persons.begin(), persons.end(), std::back_inserter(full_names), [](const Person& person) {return person.first_name + ' ' + person.last_name;} );
+    return full_names;
+}
+```
+
 5. Algorithme: std::transform + std::accumulate  
    Code: https://godbolt.org/z/fdeExxzWE 
+
+```cpp
+void to_upper(std::string& str) {
+    std::transform(str.begin(), str.end(), str.begin(), [](char c) { return toupper(c); } );
+}
+
+std::string concat_in_caps(const std::vector<std::string>& words)
+{
+    std::string result;
+    return std::accumulate(words.begin(), words.end(), result, [](const std::string& a, const std::string& b) { 
+        std::string result = b;
+        to_upper(result);
+        return a + " " + result; 
+        });
+}
+```
 
 6. Algorithme: peu importe, du moment que vous implémentez le contenu de apply_on_entities_with_type et que vous l'utilisez ensuite.  
    Code: https://godbolt.org/z/v5rn1aqGe  
