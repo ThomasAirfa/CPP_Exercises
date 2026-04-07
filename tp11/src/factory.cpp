@@ -1,11 +1,15 @@
+#include <functional>
 #include <iostream>
+#include <map>
 #include <memory>
 #include <sstream>
 #include <string>
+#include <utility>
 #include <vector>
 
 // Liste des entitées à construire
 std::string desc = R"(Object
+Person
 Person
 Dog
 Inexistent
@@ -23,16 +27,26 @@ public:
 class Factory
 {
 public:
-  // using Builder =
+  using Builder = std::function<std::unique_ptr<Entity>()>;
 
-  template <typename TDerivedEntity>
-  void register_entity(std::string)
-  {}
+  template <typename TDerivedEntity, typename... T>
+  void register_entity(const std::string& id, T&&... value) {
+    _builders.emplace(id, [&value...]() {
+      return std::make_unique<TDerivedEntity>(std::forward<T>(value)...);
+    });
+  }
 
-  std::unique_ptr<Entity> build(std::string) const { return nullptr; }
+  std::unique_ptr<Entity> build(const std::string& id) const { 
+    auto it = _builders.find(id);
+    if (it != _builders.end()) {
+      return it->second();
+    }
+    return nullptr;  
+  }
 
 private:
-  // ...
+  std::map<std::string, Builder> _builders;
+
 };
 
 class Object : public Entity
@@ -88,13 +102,33 @@ private:
   std::string _name;
 };
 
+class House : public Object
+{
+public:
+    explicit House(Person& owner)
+        : _owner { owner }
+    {}
+
+    void print() const override { std::cout << "House owned by " << _owner.get_name() << std::endl; }
+
+private:
+    Person& _owner;
+};
+
 int main()
 {
   Factory factory;
-  // factory.register_entity<Object>("Object");
-  // ...
+  factory.register_entity<Object>("Object");
+  factory.register_entity<Tree>("Tree");
+  factory.register_entity<Person>("Person", "Jean");
+  factory.register_entity<Animal>("Dog", "dog");
+  factory.register_entity<Animal>("Cat", "cat");
 
+  auto person = Person("M le maudit");
+  factory.register_entity<House>("House", person);
+  person.set_name("Picsou");
 
+  factory.register_entity<Animal>("Athanase", "cat", "Athanase");
   // Vous n'avez rien à modifier en dessous de cette ligne !
   std::vector<std::pair<std::string, std::unique_ptr<Entity>>> entities;
 
