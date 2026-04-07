@@ -8,9 +8,11 @@
 std::string desc = R"(Object
 Person
 Dog
+Inexistent
 Cat
 Tree
-House)";
+House
+Athanase)";
 
 class Entity
 {
